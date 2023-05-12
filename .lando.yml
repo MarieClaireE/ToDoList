@@ -1,0 +1,5 @@
+name: todolist
+recipe: symfony
+config:
+  webroot: web
+  php: '5.6'
