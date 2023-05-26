@@ -21,6 +21,8 @@
 		#[Route("/", name:"homepage")]
 		public function indexAction(): Response
 		{
-			return new Response($this->twig->render('default/index.html.twig'));
+			return new Response($this->twig->render('default/index.html.twig', [
+				'user' => $this->getUser()
+			]));
 		}
 	}

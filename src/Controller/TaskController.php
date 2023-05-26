@@ -34,6 +34,7 @@
 		#[Route("/tasks/create", name:"task_create")]
 		public function createTask(Request $request): Response
 		{
+			$user = $this->getUser();
 			$task = new Task();
 			$form = $this->createForm(TaskType::class, $task);
 
@@ -44,6 +45,10 @@
 				$task->setCreatedAt(new \DateTimeImmutable());
 				$task->setIsDone(false);
 
+				if(!is_null($user)){
+					$task->setCreatedBy($user);
+				}
+
 				$this->em->persist($task);
 				$this->em->flush();
 
@@ -53,7 +58,7 @@
 			}
 
 			return new Response($this->twig->render('task/create.html.twig', [
-				'form' => $form->createView()
+				'form' => $form->createView(),
 			]));
 		}
 
