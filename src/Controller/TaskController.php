@@ -47,6 +47,8 @@
 
 				if(!is_null($user)){
 					$task->setCreatedBy($user);
+				} else {
+					$task->setCreatedBy('ANONYME');
 				}
 
 				$this->em->persist($task);
