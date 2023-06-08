@@ -42,9 +42,10 @@
 
 			if($form->isSubmitted() && $form->isValid()) {
 
+
 				$password = $hashed->hashPassword($user, $user->getPassword());
 				$user->setPassword($password);
-				$user->setRoles([$_POST['roles-select']]);
+				$user->setRoles([$request->request->get('roles-select')]);
 
 				$this->em->persist($user);
 				$this->em->flush();
