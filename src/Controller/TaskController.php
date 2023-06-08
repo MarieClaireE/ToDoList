@@ -27,7 +27,8 @@
 		public function listAction(): Response
 		{
 			return new Response($this->twig->render('task/list.html.twig', [
-				'tasks' => $this->em->getRepository(Task::class)->findAll()
+				'tasks' => $this->em->getRepository(Task::class)->findAll(),
+				'user' => $this->getUser()
 			]));
 		}
 
