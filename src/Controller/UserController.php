@@ -65,10 +65,9 @@
 			$form->handleRequest($request);
 
 			if($form->isSubmitted() && $form->isValid()) {
-				$role[] = $_POST['roles-select'];
 				$password = $hashed->hashPassword($user, $user->getPassword());
 				$user->setPassword($password);
-				$user->setRoles($role);
+				$user->setRoles([$request->request->get('roles-select')]);
 
 				$this->em->flush();
 				$this->addFlash('success', "L'utilisateur a bien été modifié.");
