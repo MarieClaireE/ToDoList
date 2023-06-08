@@ -42,8 +42,10 @@
 
 			if($form->isSubmitted() && $form->isValid()) {
 
+
 				$password = $hashed->hashPassword($user, $user->getPassword());
 				$user->setPassword($password);
+				$user->setRoles([$request->request->get('roles-select')]);
 
 				$this->em->persist($user);
 				$this->em->flush();
@@ -65,6 +67,7 @@
 			if($form->isSubmitted() && $form->isValid()) {
 				$password = $hashed->hashPassword($user, $user->getPassword());
 				$user->setPassword($password);
+				$user->setRoles([$request->request->get('roles-select')]);
 
 				$this->em->flush();
 				$this->addFlash('success', "L'utilisateur a bien été modifié.");
