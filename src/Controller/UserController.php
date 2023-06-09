@@ -42,7 +42,6 @@
 
 			if($form->isSubmitted() && $form->isValid()) {
 
-
 				$password = $hashed->hashPassword($user, $user->getPassword());
 				$user->setPassword($password);
 				$user->setRoles([$request->request->get('roles-select')]);
