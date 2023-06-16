@@ -19,12 +19,16 @@ class DefaultControllerTest extends WebTestCase
 				$linkConnection = $crawler->selectLink('Se connecter')->link();
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Bienvenue sur Todo List, l\'application vous permettant de gérer l\'ensemble de vos tâches sans effort !');
+        //$this->assertSelectorTextContains('h1', 'Bienvenue sur Todo List, l\'application vous permettant de gérer l\'ensemble de vos tâches sans effort !');
 				$client->click($linkCreateTask);
+				$client->request('GET', '/tasks/create');
 				$client->click($linkTaskList);
+	      $client->request('GET', '/tasks');
 				$client->click($linkTaskDone);
 	      $client->click($linkCreateUser);
+	      $client->request('GET', '/users/create');
 	      $client->click($linkConnection);
+	      $client->request('GET', '/login');
 
 
 

@@ -3,6 +3,7 @@
 namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserControllerTest extends WebTestCase
 {
@@ -11,18 +12,16 @@ class UserControllerTest extends WebTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', '/users/create');
 
-				//$buttonCreate = $crawler->selectButton('submit');
-	      $buttonCreate = $client->submitForm('submit', [
-					'form[username]' => 'Pete'
-	      ]);
-				//$form = $buttonCreate->form();
+				$form = $crawler->selectButton('Ajouter')->form();
+				//dd($form);
 
-				//$form['form[username]'] = 'Pete';
-				//$client->submit($form);
-				$client->followRedirect();
+				$form['user[password]'] = [
+					'first' => "pass",
+					'second' => "passs"
+				];
+				$client->submit($form);
+				$this->assertSame('Erreur: mots de passe ');
 				echo $client->getResponse()->getContent();
 
-        //$this->assertResponseIsSuccessful();
-        //$this->assertSelectorTextContains('h1', 'Créer un utilisateur');
     }
 }
