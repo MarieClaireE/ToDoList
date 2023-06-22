@@ -37,8 +37,9 @@
 
 		public function testRole(): void
 		{
+			$this->assertSame(['ROLE_USER'], $this->user->getRoles());
 			$this->user->setRoles(['ROLE_ADMIN']);
-			$this->assertSame(['ROLE_ADMIN'], $this->user->getRoles());
+			$this->assertSame(['ROLE_ADMIN', 'ROLE_USER'], $this->user->getRoles());
 		}
 
 		public function testEraseCredential(): void
