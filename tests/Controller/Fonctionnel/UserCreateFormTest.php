@@ -38,20 +38,21 @@ class UserCreateFormTest extends WebTestCase
 	public function testUsernameIsNotEmpty(): void
 	{
 		$form = $this->crawler->selectButton('Ajouter')->form();
-
-		$form['user[username]'] = '';
-
+		$username = '';
+		$form['user[username]'] = $username;
 		$this->client->submit($form);
+		$this->assertSame('', $username);
 	}
 
 	public function testEmailIsNotEmpty(): void
 	{
 		$form = $this->crawler->selectButton('Ajouter')->form();
-
-		$form['user[email]'] = '';
-
+		$email = '';
+		$form['user[email]'] = $email;
 		$this->client->submit($form);
+		$this->assertSame('', $email);
 	}
+
 	/*public function testCreateUser(): void
 	{
 			$client = static::createClient();
