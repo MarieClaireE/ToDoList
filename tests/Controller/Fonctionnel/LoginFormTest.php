@@ -12,7 +12,7 @@
 			$client = static::createClient();
 			$userRepository = static::getContainer()->get(UserRepository::class);
 
-			$testUser = $userRepository->findBy(['email' => 'mcemma.974@gmail.com']);
+			$testUser = $userRepository->findOneBy(['email' => 'mcemma.974@gmail.com']);
 
 			$client->loginUser($testUser);
 

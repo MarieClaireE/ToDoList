@@ -20,22 +20,24 @@
 			$this->assertResponseIsSuccessful();
 		}
 
-		public function testTitleIsNotEmpty(): void
+		public function testTitleIsEmpty(): void
 		{
 			$form = $this->crawler->selectButton('Ajouter')->form();
-			$titre = '';
+			$titre = 'Titre';
 			$form['task[title]'] = $titre;
 			$this->client->submit($form);
 			$this->assertSame('', $titre);
+			// $this->client->followRedirect();
 		}
 
 
-		public function testContentIsNotEmpty(): void
+		public function testContentIsEmpty(): void
 		{
 			$form = $this->crawler->selectButton('Ajouter')->form();
 			$content = '';
 			$form['task[content]'] = $content;
 			$this->client->submit($form);
 			$this->assertSame('', $content);
+			// $this->client->followRedirect();
 		}
 	}

@@ -42,6 +42,7 @@ class UserCreateFormTest extends WebTestCase
 		$form['user[username]'] = $username;
 		$this->client->submit($form);
 		$this->assertSame('', $username);
+		// $this->client->followRedirect();
 	}
 
 	public function testEmailIsNotEmpty(): void
@@ -51,6 +52,7 @@ class UserCreateFormTest extends WebTestCase
 		$form['user[email]'] = $email;
 		$this->client->submit($form);
 		$this->assertSame('', $email);
+		// $this->client->followRedirect();
 	}
 
 	/*public function testCreateUser(): void
