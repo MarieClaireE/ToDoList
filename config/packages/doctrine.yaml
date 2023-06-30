@@ -17,6 +17,18 @@ doctrine:
                 prefix: 'App\Entity'
                 alias: App
 
+when@test:
+    doctrine:
+        dbal:
+            dbname: NewToDoList
+            host: localhost
+            port: 3306
+            user: root
+            password: password
+            driver: pdo_mysql
+            # if the url option is specified, it will override the above config
+            url: mysql://root:password@127.0.0.1:3306/NewToDoList?serverVersion=8&charset=utf8mb4
+
 when@prod:
     doctrine:
         orm:
