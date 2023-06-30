@@ -25,8 +25,10 @@
 			$this->assertSelectorNotExists('col-sm-4 col-lg-4 col-md-4', 'La liste des taches n\'apparait pas ');
 		}
 
-		public function testTaskIsDone(): void
+		public function testTaskIsNotDone(): void
 		{
-
+			$this->crawler = $this->client->request('GET', '/tasks');
+			$this->assertResponseIsSuccessful();
+			$this->assertSelectorNotExists('glyphicon glyphicon-ok', 'La tache n\'est pas terminé');
 		}
 	}
