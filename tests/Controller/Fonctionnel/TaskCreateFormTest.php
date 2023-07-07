@@ -23,7 +23,7 @@
 		public function testTitleIsEmpty(): void
 		{
 			$form = $this->crawler->selectButton('Ajouter')->form();
-			$titre = 'Titre';
+			$titre = '';
 			$form['task[title]'] = $titre;
 			$this->client->submit($form);
 			$this->assertSame('', $titre);

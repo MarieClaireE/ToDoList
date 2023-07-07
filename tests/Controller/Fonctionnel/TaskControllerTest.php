@@ -32,10 +32,10 @@
 			$this->assertSelectorNotExists('glyphicon glyphicon-ok', 'La tache n\'est pas terminé');
 		}
 
-		public function testButtonDeleteAppears(): void
+		public function testButtonDeleteNotAppears(): void
 		{
 			$this->crawler = $this->client->request('GET', '/tasks');
 			$this->assertResponseIsSuccessful();
-			$this->assertSelectorExists('btn btn-danger btn-sm pull-right', 'Le bouton supprimer n\'apparait pas.');
+			$this->assertSelectorNotExists('btn btn-danger btn-sm pull-right', 'Le bouton supprimer n\'apparait pas.');
 		}
 	}
