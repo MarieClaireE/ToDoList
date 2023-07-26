@@ -55,21 +55,13 @@ class UserCreateFormTest extends WebTestCase
 		// $this->client->followRedirect();
 	}
 
-	/*public function testCreateUser(): void
+	/* public function testRoleUser(): void
 	{
-			$client = static::createClient();
-			$crawler = $client->request('GET', '/users/create');
+		$form = $this->crawler->selectButton('Ajouter')->form();
+		$role[] = 'ROLE_ADMIN';
+		$form['user[roles-select]'] = $role;
+		$this->client->submit($form);
+		$this->assertSame('["ROLE_USER"]', $role);
+	} */
 
-			$form = $crawler->selectButton('Ajouter')->form();
-			//dd($form);
-
-			$form['user[password]'] = [
-				'first' => "pass",
-				'second' => "passs"
-			];
-			$client->submit($form);
-			$this->assertSame('Erreur: mots de passe ');
-			echo $client->getResponse()->getContent();
-
-	}*/
 }
