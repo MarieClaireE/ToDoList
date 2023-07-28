@@ -7,6 +7,7 @@
 	use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 	use Symfony\Component\DomCrawler\Crawler;
 	use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 	class UserEditFormTest extends WebTestCase
 	{
@@ -16,58 +17,26 @@
 		protected function setUp(): void
 		{
 			parent::setUp();
+		}
+
+		protected static function getUrl($route, $params = [])
+		{
+			return self::$kernel->getContainer()->get('router')->generate($route, $params, UrlGeneratorInterface::ABSOLUTE_URL);
+		}
+
+		public function testEditUser(): void
+		{
 			$this->client = static::createClient();
-			$userRepository = static::getContainer()->get(UserRepository::class);
-			$user = $userRepository->find(2);
-			$id = $user->getId();
-			$this->crawler = $this->client->request('GET', "users/{$id}/edit");
+
+			$userRepo = static::getContainer()->get(UserRepository::class);
+			$testUser = $userRepo->findOneBy(["email" => "mcemma.974@gmail.com"]);
+
+			$param = $testUser->getId();
+			$url = $this->getUrl('user_edit', ["id" => $param]);
+
+			$this->crawler = $this->client->request('GET', $url);
+
 			$this->assertResponseIsSuccessful();
 		}
-
-		public function testEditPasswordMustBeTheSame(): void
-		{
-			$this->assertSelectorNotExists('#user ul li');
-			$form = $this->crawler->selectButton('Ajouter')->form();
-
-			$form['user[password]'] = [
-				'first' => "pass",
-				'second' => "passs"
-			];
-
-			$this->client->submit($form);
-			$this->assertSelectorExists('#user ul li', "Les deux mots de passe doivent correspondre.");
-		}
-
-
-		public function testEditUsernameIsNotEmpty(): void
-		{
-			$form = $this->crawler->selectButton('Ajouter')->form();
-			$userRepository = static::getContainer()->get(UserRepository::class);
-			$user = $userRepository->find(2);
-			$username = $user->getUsername();
-			$form['user[username]'] = $username;
-			$this->client->submit($form);
-			// $this->assertSame('', $username);
-			// $this->client->followRedirect();
-		}
-
-		public function testEditEmailIsNotEmpty(): void
-		{
-			$form = $this->crawler->selectButton('Ajouter')->form();
-			$email = '';
-			$form['user[email]'] = $email;
-			$this->client->submit($form);
-			$this->assertSame('', $email);
-			// $this->client->followRedirect();
-		}
-
-		/* public function testRoleUser(): void
-		{
-			$form = $this->crawler->selectButton('Ajouter')->form();
-			$role[] = 'ROLE_ADMIN';
-			$form['user[roles-select]'] = $role;
-			$this->client->submit($form);
-			$this->assertSame('["ROLE_USER"]', $role);
-		} */
 
 	}

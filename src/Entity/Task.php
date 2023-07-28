@@ -20,11 +20,9 @@ class Task
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank("Vous devez saisir un titre.")]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank("Vous devez saisir du contenu.")]
     private ?string $content = null;
 
     #[ORM\Column]

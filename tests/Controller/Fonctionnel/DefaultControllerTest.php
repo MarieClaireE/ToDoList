@@ -10,8 +10,7 @@ class DefaultControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/');
-	      $this->assertResponseIsSuccessful();
-				$this->assertSelectorExists('a[href="/login"]');
-
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('a[href="/login"]');
     }
 }

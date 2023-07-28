@@ -2,9 +2,11 @@
 
 	namespace App\Tests\Controller\Fonctionnel;
 
-	use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use App\Repository\TaskRepository;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 	use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 	use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\HttpFoundation\Request;
 
 	class TaskControllerTest extends WebTestCase
 	{
@@ -38,4 +40,6 @@
 			$this->assertResponseIsSuccessful();
 			$this->assertSelectorNotExists('btn btn-danger btn-sm pull-right', 'Le bouton supprimer n\'apparait pas.');
 		}
+
+	
 	}

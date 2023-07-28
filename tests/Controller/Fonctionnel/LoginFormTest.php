@@ -19,4 +19,22 @@
 			$client->request('GET', '/');
 			$this->assertResponseIsSuccessful();
 		}
+
+		public function testLoginIsNotPossible(): void
+		{
+			$client = static::createClient();
+			$client->request('GET', '/login');
+			$this->assertResponseIsSuccessful();
+        	$this->assertSelectorNotExists('btn btn-lg btn-primary');
+		}
+
+		public function testLogout(): void
+		{
+			$client = static::createClient();
+			$client->request('GET', '/logout');
+			// $crawler = $client->request('GET', '/');
+			// $this->assertResponseIsSuccessful();
+			// $this->assertSelectorExists('a[href="/logout"]');
+			// $client->followRedirect();
+		}
 	}
