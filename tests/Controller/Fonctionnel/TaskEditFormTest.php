@@ -16,16 +16,6 @@ class TaskEditFormTest extends WebTestCase
     protected function setUp(): void
     {
         parent::setUp();
-    }
-
-    protected static function getUrl($route, $params = [])
-    {
-        return self::$kernel->getContainer()->get('router')->generate($route, $params, UrlGeneratorInterface::ABSOLUTE_URL);
-    }
-
-    public function testformEdit(): void
-    {
-
         $this->client = static::createClient();
 
         $taskRepo = static::getContainer()->get(TaskRepository::class);
@@ -37,6 +27,21 @@ class TaskEditFormTest extends WebTestCase
         $this->crawler = $this->client->request('GET', $url);
 
         $this->assertResponseIsSuccessful();
+    }
 
+    protected static function getUrl($route, $params = [])
+    {
+        return self::$kernel->getContainer()->get('router')->generate($route, $params, UrlGeneratorInterface::ABSOLUTE_URL);
+    }
+
+    public function testTaskEdit(): void
+    {
+
+       $form = $this->crawler->selectButton('Modifier')->form();
+
+       $this->client->submit($form);
+
+       $this->client->request('GET', '/tasks');
+       $this->assertResponseIsSuccessful();
     }
 }
