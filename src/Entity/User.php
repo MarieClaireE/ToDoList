@@ -19,8 +19,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 60, unique: true)]
-    #[Assert\NotBlank("Vous devez saisir une adresse email.")]
-    #[Assert\Email("Le format de l'adresse n'est pas correcte.")]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -33,7 +31,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 25, unique: true)]
-    #[Assert\NotBlank("Vous devez saisir un nom d'utilisateur.")]
     private ?string $username = null;
 
     #[ORM\OneToMany(mappedBy: 'createdBy', targetEntity: Task::class)]
