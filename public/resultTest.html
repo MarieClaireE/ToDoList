@@ -1,14 +1,27 @@
-PHPUnit 9.6.8 by Sebastian Bergmann and contributors.
 
-Testing 
-.                                                                   1 / 1 (100%)
+Fatal error: Uncaught ArgumentCountError: Too few arguments to function App\Tests\Controller\Fonctionnel\TaskCreateFormTest::__construct(), 0 passed in /Users/marieemma/dev/ToDoList/NewToDoList/vendor/phpunit/phpunit/src/Framework/TestBuilder.php on line 138 and exactly 1 expected in /Users/marieemma/dev/ToDoList/NewToDoList/tests/Controller/Fonctionnel/TaskCreateFormTest.php:20
+Stack trace:
+#0 /Users/marieemma/dev/ToDoList/NewToDoList/vendor/phpunit/phpunit/src/Framework/TestBuilder.php(138): App\Tests\Controller\Fonctionnel\TaskCreateFormTest->__construct()
+#1 /Users/marieemma/dev/ToDoList/NewToDoList/vendor/phpunit/phpunit/src/Framework/TestBuilder.php(68): PHPUnit\Framework\TestBuilder->buildTestWithoutData('App\\Tests\\Contr...')
+#2 /Users/marieemma/dev/ToDoList/NewToDoList/vendor/phpunit/phpunit/src/Framework/TestSuite.php(890): PHPUnit\Framework\TestBuilder->build(Object(ReflectionClass), 'testTaskCreate')
+#3 /Users/marieemma/dev/ToDoList/NewToDoList/vendor/phpunit/phpunit/src/Framework/TestSuite.php(231): PHPUnit\Framework\TestSuite->addTestMethod(Object(ReflectionClass), Object(ReflectionMethod))
+#4 /Users/marieemma/dev/ToDoList/NewToDoList/vendor/phpunit/phpunit/src/Framework/TestSuite.php(361): PHPUnit\Framework\TestSuite->__construct(Object(ReflectionClass))
+#5 /Users/marieemma/dev/ToDoList/NewToDoList/vendor/phpunit/phpunit/src/Framework/TestSuite.php(511): PHPUnit\Framework\TestSuite->addTestSuite(Object(ReflectionClass))
+#6 /Users/marieemma/dev/ToDoList/NewToDoList/vendor/phpunit/phpunit/src/Framework/TestSuite.php(536): PHPUnit\Framework\TestSuite->addTestFile('/Users/marieemm...')
+#7 /Users/marieemma/dev/ToDoList/NewToDoList/vendor/phpunit/phpunit/src/TextUI/TestSuiteMapper.php(67): PHPUnit\Framework\TestSuite->addTestFiles(Array)
+#8 /Users/marieemma/dev/ToDoList/NewToDoList/vendor/phpunit/phpunit/src/TextUI/Command.php(391): PHPUnit\TextUI\TestSuiteMapper->map(Object(PHPUnit\TextUI\XmlConfiguration\TestSuiteCollection), '')
+#9 /Users/marieemma/dev/ToDoList/NewToDoList/vendor/phpunit/phpunit/src/TextUI/Command.php(112): PHPUnit\TextUI\Command->handleArguments(Array)
+#10 /Users/marieemma/dev/ToDoList/NewToDoList/vendor/phpunit/phpunit/src/TextUI/Command.php(97): PHPUnit\TextUI\Command->run(Array, true)
+#11 /Users/marieemma/dev/ToDoList/NewToDoList/vendor/phpunit/phpunit/phpunit(107): PHPUnit\TextUI\Command::main()
+#12 /Users/marieemma/dev/ToDoList/NewToDoList/vendor/bin/phpunit(110): include('/Users/marieemm...')
+#13 {main}
 
-Time: 00:03.238, Memory: 44.50 MB
+Next PHPUnit\TextUI\RuntimeException: Too few arguments to function App\Tests\Controller\Fonctionnel\TaskCreateFormTest::__construct(), 0 passed in /Users/marieemma/dev/ToDoList/NewToDoList/vendor/phpunit/phpunit/src/Framework/TestBuilder.php on line 138 and exactly 1 expected in /Users/marieemma/dev/ToDoList/NewToDoList/vendor/phpunit/phpunit/src/TextUI/Command.php on line 99
 
-OK (1 test, 2 assertions)
+PHPUnit\TextUI\RuntimeException: Too few arguments to function App\Tests\Controller\Fonctionnel\TaskCreateFormTest::__construct(), 0 passed in /Users/marieemma/dev/ToDoList/NewToDoList/vendor/phpunit/phpunit/src/Framework/TestBuilder.php on line 138 and exactly 1 expected in /Users/marieemma/dev/ToDoList/NewToDoList/vendor/phpunit/phpunit/src/TextUI/Command.php on line 99
 
-Remaining indirect deprecation notices (1)
-
-  1x: The "Monolog\Logger" class is considered final. It may change without further notice as of its next major version. You should not extend it from "Symfony\Bridge\Monolog\Logger".
-    1x in TaskCreateFormTest::testTaskCreate from App\Tests\Controller\Fonctionnel
+Call Stack:
+    0.0047     415432   1. {main}() /Users/marieemma/dev/ToDoList/NewToDoList/vendor/bin/phpunit:0
+    0.0076     427984   2. include('/Users/marieemma/dev/ToDoList/NewToDoList/vendor/phpunit/phpunit/phpunit') /Users/marieemma/dev/ToDoList/NewToDoList/vendor/bin/phpunit:110
+    0.0355    1332288   3. PHPUnit\TextUI\Command::main($exit = ???) /Users/marieemma/dev/ToDoList/NewToDoList/vendor/phpunit/phpunit/phpunit:107
 

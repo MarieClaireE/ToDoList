@@ -2,25 +2,32 @@
 
 	namespace App\Tests\Controller\Fonctionnel;
 
-
-	use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-	use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-	use Symfony\Component\DomCrawler\Crawler;
+use App\Entity\Task;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-	class TaskCreateFormTest extends WebTestCase
-	{
-		private Crawler $crawler;
-		private KernelBrowser $client;
 
-		protected function setUp(): void
+class TaskCreateFormTest extends WebTestCase
+{
+	private Crawler $crawler;
+	private KernelBrowser $client;
+	private EntityManagerInterface $em;
+
+
+	protected function setUp(): void
     {
         parent::setUp();
+
         $this->client = static::createClient();
         $url = $this->getUrl('task_create');
         $this->crawler = $this->client->request('GET', $url);
-        $this->assertResponseIsSuccessful();
     }
+
+	
 
     protected static function getUrl($route, $params = [])
     {
@@ -30,46 +37,27 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
     public function testTaskCreate(): void
     {
 
-       $form = $this->crawler->selectButton('Ajouter')->form();
-       $this->client->submit($form);
-       $this->client->request('GET', '/tasks');
-       $this->assertResponseIsSuccessful();
-    }
-		// protected function setUp(): void
-		// {
-		// 	parent::setUp();
-		// 	$this->client = static::createClient();
-		// 	$this->crawler = $this->client->request('GET', '/tasks/create');
-		// 	$this->assertResponseIsSuccessful();
-		// }
+		// $clientRepo = static::getContainer()->get(UserRepository::class);
+		
+		// $user = $clientRepo->findOneBy(['id' => 2]);
 
-		// public function testTaskCreate(): void
-		// {
-		// 	$form = $this->crawler->selectButton('Ajouter')->form();
+		// $task = new Task;
+		// $task->setTitle('titre 6');
+		// $task->setContent('content 6');
+		// $task->setCreatedBy($user);
+		
+		
+		// $this->em->persist($task);
+		
 
-		// 	$this->client->submit($form);
+		$form = $this->crawler->selectButton('Ajouter')->form();
 
-		// 	$this->client->request('GET', '/tasks');
-       	// 	$this->assertResponseIsSuccessful();
-		// }
-		// public function testTitleIsEmpty(): void
-		// {
-		// 	$form = $this->crawler->selectButton('Ajouter')->form();
-		// 	$titre = '';
-		// 	$form['task[title]'] = $titre;
-		// 	$this->client->submit($form);
-		// 	$this->assertSame('', $titre);
-		// 	// $this->client->followRedirect();
-		// }
+		// $form['task[title]'] = $task->getTitle();
+		// $form['task[content]'] = $task->getContent();
 
+		$this->client->submit($form);
 
-		// public function testContentIsEmpty(): void
-		// {
-		// 	$form = $this->crawler->selectButton('Ajouter')->form();
-		// 	$content = '';
-		// 	$form['task[content]'] = $content;
-		// 	$this->client->submit($form);
-		// 	$this->assertSame('', $content);
-		// 	// $this->client->followRedirect();
-		// }
-	}
+		$this->client->request('GET', '/tasks');
+		$this->assertResponseIsSuccessful();
+    }	
+}
