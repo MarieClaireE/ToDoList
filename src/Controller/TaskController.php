@@ -15,19 +15,19 @@
 	class TaskController extends AbstractController
 	{
 		private Environment $twig;
-		private EntityManagerInterface $em;
+		private EntityManagerInterface $manager;
 
-		public function __construct(Environment $twig, EntityManagerInterface $em) {
-			$this->twig = $twig;
-			$this->em = $em;
-			return $this;
-		}
+				public function __construct(Environment $twig, EntityManagerInterface $manager) {
+					$this->twig = $twig;
+					$this->manager = $manager;
+					return $this;
+				}
 
 		#[Route("/tasks", name:"task_list")]
 		public function listAction(): Response
 		{
 			return new Response($this->twig->render('task/list.html.twig', [
-				'tasks' => $this->em->getRepository(Task::class)->findAll(),
+				'tasks' => $this->manager->getRepository(Task::class)->findAll(),
 				'user' => $this->getUser()
 			]));
 		}
@@ -52,8 +52,8 @@
 					$task->setCreatedBy(NULL);
 				}
 
-				$this->em->persist($task);
-				$this->em->flush();
+				$this->manager->persist($task);
+				$this->manager->flush();
 
 				$this->addFlash('success', 'La tâche a bien été ajoutée.');
 
@@ -74,7 +74,7 @@
 			if($form->isSubmitted() && $form->isValid()) {
 				$task->setCreatedAt(new \DateTimeImmutable());
 
-				$this->em->flush();
+				$this->manager->flush();
 				$this->addFlash('success', 'La tâche a bien été modifiée.');
 
 				return $this->redirectToRoute('task_list');
@@ -90,7 +90,7 @@
 		public function toggleTaskAction(Task $task): Response
 		{
 			$task->toggle(!$task->isIsDone());
-			$this->em->flush();
+			$this->manager->flush();
 
 			$this->addFlash('success', sprintf('La tâche %s a bien été marquée comme réalisée.', $task->getTitle()));
 
@@ -100,8 +100,8 @@
 		#[Route("/tasks/{id}/delete", name:"task_delete")]
 		public function deleteTaskAction(Task $task): Response
 		{
-			$this->em->remove($task);
-			$this->em->flush();
+			$this->manager->remove($task);
+			$this->manager->flush();
 
 			$this->addFlash('success', 'La tâche a bien été supprimée.');
 
