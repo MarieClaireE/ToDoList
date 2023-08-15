@@ -47,7 +47,9 @@
                 
 
                 {% if app.user %}
+                    {% set roleAdmin = 'ROLE_ADMIN'  %}
                     <a href="{{ path('app_logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
+
                     {% if app.user.roles[0] ==  roleAdmin %}
                         <a href="{{ path('user_list') }}" class="pull-right btn btn-secondary">Gestion des utilisateurs</a>
                     {% endif %}
