@@ -8,8 +8,16 @@
         {{ form_start(form, {'action' : path('user_edit', {'id' : user.id})}) }}
         {{ form_widget(form) }}
         <select method="POST" id="roles-select" name="roles-select">
-            <option value='ROLE_ADMIN'>Rôle administrateur</option>
-            <option value='ROLE_USER'>Rôle utilisateur</option>
+            <option value={{ user.roles[0] }} disabled selected>
+                {% if user.roles[0] == 'ROLE_ADMIN' %}
+                    Administrateur
+                {% else %}
+                    Utilisateur
+                {% endif %}
+                
+            </option>
+            <option value='ROLE_ADMIN'>Administrateur</option>
+            <option value='ROLE_USER'>Utilisateur</option>
         </select>
 
         <button type="submit" class="btn btn-success pull-right">Modifier</button>
