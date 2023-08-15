@@ -1,12 +1,19 @@
 # ToDoList
-
 Pour tester les nouvelles fonctionnalités de ToDoList, sélectionnez la branche `main`.
 
+# Requirement 
+   Symfony 6
+   PHP 8.1
+   MySQL 8
+   
 # CODACY 
 
 # Diagrammes
+Les diagrammes de classe et de cas d'utilisation se trouvent dans le dossier `diagrammes`.
 
 # Documentations
+Les documents `Implémentation de l'authentification.pdf` et `Audit.pdf` se trouvent dans le dossier `Documentations`.
+Le document de contribution au projet se trouve en racine du projet. 
 
 # Installation du projet 
 1. Téléchager ou cloner le projet: `git clone https://github.com/MarieClaireE/ToDoList.git`.
