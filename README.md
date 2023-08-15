@@ -2,9 +2,9 @@
 Pour tester les nouvelles fonctionnalités de ToDoList, sélectionnez la branche `main`.
 
 # Requirement 
-   Symfony 6
-   PHP 8.1
-   MySQL 8
+   - Symfony 6
+   - PHP 8.1
+   - MySQL 8
    
 # CODACY 
 
