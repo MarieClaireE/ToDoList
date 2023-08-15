@@ -5,12 +5,15 @@
 	use App\Entity\User;
 	use App\Form\UserType;
 	use Doctrine\ORM\EntityManagerInterface;
+	use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 	use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 	use Symfony\Component\HttpFoundation\Request;
 	use Symfony\Component\HttpFoundation\Response;
 	use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 	use Symfony\Component\Routing\Annotation\Route;
 	use Twig\Environment;
+
+
 
 	class UserController extends AbstractController
 	{
@@ -25,6 +28,7 @@
 		}
 
 		#[Route("/users", name:"user_list")]
+		#[IsGranted('ROLE_ADMIN', message:'Vous n\’avez pas les droits requis pour accéder à cette partie.')]
 		public function listAction(): Response
 		{
 			return new Response($this->twig->render('user/list.html.twig',[
@@ -33,6 +37,7 @@
 		}
 
 		#[Route("/users/create", name:"user_create")]
+		#[IsGranted('ROLE_ADMIN', message:'Vous n\’avez pas les droits requis pour accéder à cette partie.')]
 		public function createAction(Request $request, UserPasswordHasherInterface $hashed): Response
 		{
 			$user = new User();
@@ -58,6 +63,7 @@
 		}
 
 		#[Route("/users/{id}/edit", name:"user_edit")]
+		#[IsGranted('ROLE_ADMIN', message:'Vous n\’avez pas les droits requis pour accéder à cette partie.')]
 		public function editAction(Request $request, User $user, UserPasswordHasherInterface $hashed): Response
 		{
 			$form = $this->createForm(UserType::class, $user);
