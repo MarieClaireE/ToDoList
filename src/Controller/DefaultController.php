@@ -18,9 +18,9 @@ class DefaultController extends AbstractController
 
 			/**
 			 * construct DefaultController
-			 * @var Environment $twig
+			 * @param Environment $twig
 			 */
-			public function __construct($twig)
+			public function __construct(Environment $twig)
 			{
 
 				$this->twig = $twig;
@@ -36,11 +36,9 @@ class DefaultController extends AbstractController
 			#[Route("/", name:"homepage")]
 			public function indexAction(): Response
 			{
-
 				return new Response($this->twig->render('default/index.html.twig',[
 							'user' => $this->getUser()
 					])
 				);
-
 			}		
 }
