@@ -18,6 +18,7 @@
 
 				/**
 				 * construct DefaultController
+				 * @var Environment $twig
 				 */
 				public function __construct(Environment $twig)
 				{
@@ -25,16 +26,21 @@
 					$this->twig = $twig;
 					return $this;
 
+					//end __construct
 				}
-				// end __construct 
 
+				/**
+				 * @return Response
+				 */
 				#[Route("/", name:"homepage")]
 				public function indexAction(): Response
 				{
 
-					return new Response($this->twig->render('default/index.html.twig', [
-						'user' => $this->getUser()
-					]));
-					
+					return new Response($this->twig->render('default/index.html.twig',
+						['user' => $this->getUser()]
+					));
+
 				}
+
 	}
+	
