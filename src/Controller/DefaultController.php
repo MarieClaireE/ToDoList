@@ -26,7 +26,7 @@ class DefaultController extends AbstractController
 				$this->twig = $twig;
 				return $this;
 
-				//End __construct()
+				// End __construct()
 
 			}
 
@@ -38,10 +38,9 @@ class DefaultController extends AbstractController
 			{
 
 				return new Response($this->twig->render('default/index.html.twig',[
-					'user' => $this->getUser()
+							'user' => $this->getUser()
 					])
 				);
 
-			}
-		
+			}		
 }
