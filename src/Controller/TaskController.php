@@ -14,8 +14,14 @@
 
 class TaskController extends AbstractController
 {
-			private Environment $twig;
-			private EntityManagerInterface $manager;
+			/**
+			 * @var Environment $twig
+			 */
+			private $twig;
+			/**
+			 * @var EntityManagerInteface $manager
+			 */
+			private $manager;
 
 			/**
 			 * Contruct TaskController 
@@ -91,6 +97,10 @@ class TaskController extends AbstractController
 				]));
 			}
 
+			/**
+			 * marquer comme fait une tâche
+			 * @return Response
+			 */
 			#[Route("/tasks/{id}/toggle", name:"task_toggle")]
 			public function toggleTaskAction(Task $task): Response
 			{

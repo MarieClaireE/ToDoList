@@ -17,8 +17,14 @@
 
 	class UserController extends AbstractController
 	{
-		private Environment $twig;
-		private EntityManagerInterface $manager;
+		/**
+		 * @var Environment $twig
+		 */
+		private $twig;
+		/**
+		 * @var EntityManagerInteface $manager
+		 */
+		private $manager;
 
 		public function __construct(Environment $twig, EntityManagerInterface $manager) {
 			$this->twig = $twig;
@@ -26,7 +32,12 @@
 
 			return $this;
 		}
+		// end __construct
 
+		/**
+		 * list of users 
+		 * @return Response
+		 */
 		#[Route("/users", name:"user_list")]
 		#[IsGranted('ROLE_ADMIN', message:'Vous n\’avez pas les droits requis pour accéder à cette partie.')]
 		public function listAction(): Response
@@ -80,8 +91,8 @@
 			}
 
 			return new Response($this->twig->render('user/edit.html.twig', [
-				'form' => $form->createView(),
-				'user' => $user
+							'form' => $form->createView(),
+							'user' => $user
 			]));
 		}
 

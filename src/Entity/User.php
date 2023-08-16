@@ -33,6 +33,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 25, unique: true)]
     private ?string $username = null;
 
+    /**
+     * @var Collection $tasks
+     */
     #[ORM\OneToMany(mappedBy: 'createdBy', targetEntity: Task::class)]
     private Collection $tasks;
 
