@@ -11,7 +11,7 @@ class MyCustomProblemNormalizer implements NormalizerInterface
     {
         return [
             'content' => 'This is my custom problem normalizer.',
-            'exception'=> [
+            'exception' => [
                 'message' => $exception->getMessage(),
                 'code' => $exception->getStatusCode(),
             ],

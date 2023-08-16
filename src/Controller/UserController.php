@@ -18,11 +18,11 @@
 	class UserController extends AbstractController
 	{
 		private Environment $twig;
-		private EntityManagerInterface $em;
+		private EntityManagerInterface $manager;
 
-		public function __construct(Environment $twig, EntityManagerInterface $em) {
+		public function __construct(Environment $twig, EntityManagerInterface $manager) {
 			$this->twig = $twig;
-			$this->em = $em;
+			$this->manager = $manager;
 
 			return $this;
 		}
@@ -32,7 +32,7 @@
 		public function listAction(): Response
 		{
 			return new Response($this->twig->render('user/list.html.twig',[
-				'users' => $this->em->getRepository(User::class)->findAll()
+				'users' => $this->manager->getRepository(User::class)->findAll()
 			]));
 		}
 
@@ -45,15 +45,13 @@
 
 			$form->handleRequest($request);
 
-			if($form->isSubmitted() && $form->isValid()) {
-
-
+			if ($form->isSubmitted() && $form->isValid()) {
 				$password = $hashed->hashPassword($user, $user->getPassword());
 				$user->setPassword($password);
 				$user->setRoles([$request->request->get('roles-select')]);
 
-				$this->em->persist($user);
-				$this->em->flush();
+				$this->manager->persist($user);
+				$this->manager->flush();
 
 				return $this->redirectToRoute('user_list');
 			}
@@ -75,7 +73,7 @@
 				$user->setPassword($password);
 				$user->setRoles([$request->request->get('roles-select')]);
 
-				$this->em->flush();
+				$this->manager->flush();
 				$this->addFlash('success', "L'utilisateur a bien été modifié.");
 
 				return $this->redirectToRoute('user_list');

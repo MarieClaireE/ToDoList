@@ -10,19 +10,19 @@
 
 	class DefaultController extends AbstractController
 	{
-		private Environment $twig;
+				private Environment $twig;
 
-		public function __construct(Environment $twig)
-		{
-			$this->twig = $twig;
-			return $this;
-		}
+				public function __construct(Environment $twig)
+				{
+					$this->twig = $twig;
+					return $this;
+				}
 
-		#[Route("/", name:"homepage")]
-		public function indexAction(): Response
-		{
-			return new Response($this->twig->render('default/index.html.twig', [
-				'user' => $this->getUser()
-			]));
-		}
+				#[Route("/", name:"homepage")]
+				public function indexAction(): Response
+				{
+					return new Response($this->twig->render('default/index.html.twig', [
+						'user' => $this->getUser()
+					]));
+				}
 	}

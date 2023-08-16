@@ -13,21 +13,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TaskType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-			$user = User::class;
+            public function buildForm(FormBuilderInterface $builder, array $options)
+            {
+                $builder
+                    ->add('title')
+                    ->add('content', TextareaType::class)
+                ;
+            }
 
-        $builder
-            ->add('title')
-            ->add('content', TextareaType::class)
-        ;
-    }
-
-		public function configureOptions(OptionsResolver $resolver)
-		{
-			$resolver->setDefaults([
-				'data_class' => Task::class
-			]);
-		}
+            public function configureOptions(OptionsResolver $resolver)
+            {
+                    $resolver->setDefaults([
+                        'data_class' => Task::class
+                    ]);
+            }
 
 }

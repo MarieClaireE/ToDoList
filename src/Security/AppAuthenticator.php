@@ -17,43 +17,49 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 class AppAuthenticator extends AbstractLoginFormAuthenticator
 {
-    use TargetPathTrait;
+                use TargetPathTrait;
 
-    public const LOGIN_ROUTE = 'app_login';
+                public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
-    {
-    }
 
-    public function authenticate(Request $request): Passport
-    {
-        $email = $request->request->get('email', '');
+                /**
+                 * Contruct of authenticator
+                 * @return void
+                 */
+                public function __construct(private UrlGeneratorInterface $urlGenerator)
+                {
+                }
 
-        $request->getSession()->set(Security::LAST_USERNAME, $email);
 
-        return new Passport(
-            new UserBadge($email),
-            new PasswordCredentials($request->request->get('password', '')),
-            [
-                new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
-            ]
-        );
-    }
+                public function authenticate(Request $request): Passport
+                {
+                    $email = $request->request->get('email', '');
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
-    {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
-            return new RedirectResponse($targetPath);
-        }
+                    $request->getSession()->set(Security::LAST_USERNAME, $email);
 
-        // For example:
-        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
-	      return new RedirectResponse($this->urlGenerator->generate('homepage'));
-    }
+                    return new Passport(
+                        new UserBadge($email),
+                        new PasswordCredentials($request->request->get('password', '')),
+                        [
+                            new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
+                        ]
+                    );
+                }
 
-    protected function getLoginUrl(Request $request): string
-    {
-        return $this->urlGenerator->generate(self::LOGIN_ROUTE);
-    }
+                public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
+                {
+                    if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+                        return new RedirectResponse($targetPath);
+                    }
+                    return new RedirectResponse($this->urlGenerator->generate('homepage'));
+                }
+
+                /**
+                 * getLogin Url 
+                 * @return string
+                 */
+                protected function getLoginUrl(Request $request): string
+                {
+                    return $this->urlGenerator->generate(self::LOGIN_ROUTE);
+                }
 }
