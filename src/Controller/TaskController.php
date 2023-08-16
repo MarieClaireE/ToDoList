@@ -12,99 +12,104 @@
 	use Symfony\Component\Validator\Constraints\DateTime;
 	use Twig\Environment;
 
-	class TaskController extends AbstractController
-	{
-		private Environment $twig;
-		private EntityManagerInterface $manager;
+class TaskController extends AbstractController
+{
+			private Environment $twig;
+			private EntityManagerInterface $manager;
 
-				public function __construct(Environment $twig, EntityManagerInterface $manager) {
-					$this->twig = $twig;
-					$this->manager = $manager;
-					return $this;
+			/**
+			 * Contruct TaskController 
+			 */
+			public function __construct(Environment $twig, EntityManagerInterface $manager) 
+			{
+							$this->twig = $twig;
+							$this->manager = $manager;
+							return $this;
+			}
+			// end __construct
+
+			#[Route("/tasks", name:"task_list")]
+			public function listAction(): Response
+			{
+				return new Response($this->twig->render('task/list.html.twig', [
+					'tasks' => $this->manager->getRepository(Task::class)->findAll(),
+					'user' => $this->getUser()
+				]));
+			}
+
+			#[Route("/tasks/create", name:"task_create")]
+			public function createTask(Request $request): Response
+			{
+				$user = $this->getUser();
+				$task = new Task();
+				$form = $this->createForm(TaskType::class, $task);
+
+				$form->handleRequest($request);
+
+				if($form->isSubmitted() && $form->isValid()){
+
+					$task->setCreatedAt(new \DateTimeImmutable());
+					$task->setIsDone(false);
+
+					if(!is_null($user)){
+						$task->setCreatedBy($user);
+					} else {
+						$task->setCreatedBy(NULL);
+					}
+
+					$this->manager->persist($task);
+					$this->manager->flush();
+
+					$this->addFlash('success', 'La tâche a bien été ajoutée.');
+
+					return $this->redirectToRoute('task_list');
 				}
 
-		#[Route("/tasks", name:"task_list")]
-		public function listAction(): Response
-		{
-			return new Response($this->twig->render('task/list.html.twig', [
-				'tasks' => $this->manager->getRepository(Task::class)->findAll(),
-				'user' => $this->getUser()
-			]));
-		}
+				return new Response($this->twig->render('task/create.html.twig', [
+					'form' => $form->createView(),
+				]));
+			}
 
-		#[Route("/tasks/create", name:"task_create")]
-		public function createTask(Request $request): Response
-		{
-			$user = $this->getUser();
-			$task = new Task();
-			$form = $this->createForm(TaskType::class, $task);
+			#[Route("/tasks/{id}/edit", name:"task_edit")]
+			public function editAction(Request $request, Task $task): Response
+			{
+				$form = $this->createForm(TaskType::class, $task);
+				$form->handleRequest($request);
 
-			$form->handleRequest($request);
+				if($form->isSubmitted() && $form->isValid()) {
+					$task->setCreatedAt(new \DateTimeImmutable());
 
-			if($form->isSubmitted() && $form->isValid()){
+					$this->manager->flush();
+					$this->addFlash('success', 'La tâche a bien été modifiée.');
 
-				$task->setCreatedAt(new \DateTimeImmutable());
-				$task->setIsDone(false);
-
-				if(!is_null($user)){
-					$task->setCreatedBy($user);
-				} else {
-					$task->setCreatedBy(NULL);
+					return $this->redirectToRoute('task_list');
 				}
 
-				$this->manager->persist($task);
+				return new Response($this->twig->render('task/edit.html.twig', [
+					'form' => $form->createView(),
+					'task' => $task
+				]));
+			}
+
+			#[Route("/tasks/{id}/toggle", name:"task_toggle")]
+			public function toggleTaskAction(Task $task): Response
+			{
+				$task->toggle(!$task->isIsDone());
 				$this->manager->flush();
 
-				$this->addFlash('success', 'La tâche a bien été ajoutée.');
+				$this->addFlash('success', sprintf('La tâche %s a bien été marquée comme réalisée.', $task->getTitle()));
 
 				return $this->redirectToRoute('task_list');
 			}
 
-			return new Response($this->twig->render('task/create.html.twig', [
-				'form' => $form->createView(),
-			]));
-		}
-
-		#[Route("/tasks/{id}/edit", name:"task_edit")]
-		public function editAction(Request $request, Task $task): Response
-		{
-			$form = $this->createForm(TaskType::class, $task);
-			$form->handleRequest($request);
-
-			if($form->isSubmitted() && $form->isValid()) {
-				$task->setCreatedAt(new \DateTimeImmutable());
-
+			#[Route("/tasks/{id}/delete", name:"task_delete")]
+			public function deleteTaskAction(Task $task): Response
+			{
+				$this->manager->remove($task);
 				$this->manager->flush();
-				$this->addFlash('success', 'La tâche a bien été modifiée.');
+
+				$this->addFlash('success', 'La tâche a bien été supprimée.');
 
 				return $this->redirectToRoute('task_list');
 			}
-
-			return new Response($this->twig->render('task/edit.html.twig', [
-				'form' => $form->createView(),
-				'task' => $task
-			]));
-		}
-
-		#[Route("/tasks/{id}/toggle", name:"task_toggle")]
-		public function toggleTaskAction(Task $task): Response
-		{
-			$task->toggle(!$task->isIsDone());
-			$this->manager->flush();
-
-			$this->addFlash('success', sprintf('La tâche %s a bien été marquée comme réalisée.', $task->getTitle()));
-
-			return $this->redirectToRoute('task_list');
-		}
-
-		#[Route("/tasks/{id}/delete", name:"task_delete")]
-		public function deleteTaskAction(Task $task): Response
-		{
-			$this->manager->remove($task);
-			$this->manager->flush();
-
-			$this->addFlash('success', 'La tâche a bien été supprimée.');
-
-			return $this->redirectToRoute('task_list');
-		}
-	}
+}
