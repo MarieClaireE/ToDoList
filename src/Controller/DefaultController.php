@@ -17,7 +17,6 @@ class DefaultController extends AbstractController
 			private $twig;
 
 			/**
-			 * construct DefaultController
 			 * @param Environment $twig
 			 */
 			public function __construct(Environment $twig)
@@ -26,9 +25,8 @@ class DefaultController extends AbstractController
 				$this->twig = $twig;
 				return $this;
 
-				// End __construct()
-
 			}
+			// End __construct()
 
 			/**
 			 * @return Response
