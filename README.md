@@ -7,6 +7,7 @@ Pour tester les nouvelles fonctionnalités de ToDoList, sélectionnez la branche
    - MySQL 8
    
 # CODACY 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/6c24859293d44511ad9004d79ece6c74)](https://app.codacy.com/gh/MarieClaireE/ToDoList/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 # Diagrammes
 Les diagrammes de classe et de cas d'utilisation se trouvent dans le dossier `diagrammes`.
